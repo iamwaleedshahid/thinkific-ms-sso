@@ -4,7 +4,7 @@ require('dotenv').config();
 const { generateToken } = require('./utils/token');
 
 const SERVER_PORT = process.env.PORT || 3000;
-const REDIRECT_URI = "/redirect";
+const REDIRECT_URI = process.env.MS_REDIRECT_URI;
 
 
 const config = {
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
     }).catch((error) => console.log(JSON.stringify(error)));
 });
 
-app.get('/redirect', (req, res) => {
+app.get('/callback', (req, res) => {
     const tokenRequest = {
         code: req.query.code,
         scopes: ["user.read"],
@@ -59,9 +59,9 @@ app.get('/redirect', (req, res) => {
         }
         const token = generateToken(payload);
 
-        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}`;
+        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}&return_to=${process.env.THINKIFIC_SITE_URL}&error_url=${process.env.THINKIFIC_SITE_URL}`;
 
-        res.sendStatus(200).end();
+        res.send(url).sendStatus(200);
     }).catch((error) => {
         console.log(error);
         res.status(500).send(error);
