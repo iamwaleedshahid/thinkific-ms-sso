@@ -1,0 +1,19 @@
+{
+  "name": "ms-sso-thinkific",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "run": "nodemon index.js"
+  },
+  "author": "Microsoft",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/msal-node": "^1.0.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^8.3.1"
+  }
+}
