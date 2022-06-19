@@ -1,7 +1,7 @@
 const express = require("express");
 const msal = require('@azure/msal-node');
 require('dotenv').config();
-const { generateToken } = require('./utils/token');
+const { generateToken } = require('./utils/generateJWT');
 
 const SERVER_PORT = process.env.PORT || 3000;
 const REDIRECT_URI = process.env.MS_REDIRECT_URI;
@@ -59,9 +59,9 @@ app.get('/callback', (req, res) => {
         }
         const token = generateToken(payload);
 
-        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}&return_to=${process.env.THINKIFIC_SITE_URL}&error_url=${process.env.THINKIFIC_SITE_URL}`;
+        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}&return_to=${process.env.THINKIFIC_REDIRECT}&error_url=${process.env.THINKIFIC_SITE_URL}`;
 
-        res.send(url).sendStatus(200);
+        res.redirect(url);
     }).catch((error) => {
         console.log(error);
         res.status(500).send(error);
