@@ -59,7 +59,7 @@ app.get('/callback', (req, res) => {
         }
         const token = generateToken(payload);
 
-        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}&return_to=${process.env.THINKIFIC_REDIRECT}&error_url=${process.env.THINKIFIC_SITE_URL}`;
+        const url = `https://${process.env.THINKIFIC_SUBDOMAIN}.thinkific.com/api/sso/v2/sso/jwt?jwt=${token}&return_to=${process.env.THINKIFIC_REDIRECT}&error_url=${process.env.THINKIFIC_ERROR}`;
 
         res.redirect(url);
     }).catch((error) => {
