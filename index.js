@@ -50,11 +50,12 @@ app.get('/callback', (req, res) => {
     console.log(tokenRequest);
 
     pca.acquireTokenByCode(tokenRequest).then((response) => {
-        const user = response.account.idTokenClaims
+        const user = response.account
+        const user_name = user.name.split(' ');
         const payload = {
-            "first_name": user.given_name,
-            "last_name": user.family_name,
-            "email": user.email,
+            "first_name": user_name[0],
+            "last_name": user_name[1],
+            "email": user.username,
             "iat": Math.floor(Date.now() / 1000),
         }
         const token = generateToken(payload);
